@@ -1,0 +1,25 @@
+{
+  "name": "NodeJS-P2P",
+  "version": "0.0.0",
+  "description": "NodeJS-P2P\r ==========",
+  "main": "app.js",
+  "dependencies": {
+    "clj-fuzzy": "^0.1.8",
+    "vs-stun": "^0.0.7",
+    "socket.io": "^1.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/matthaywardwebdesign/NodeJS-P2P.git"
+  },
+  "author": "Matt Hayward",
+  "license": "None",
+  "bugs": {
+    "url": "https://github.com/matthaywardwebdesign/NodeJS-P2P/issues"
+  },
+  "homepage": "https://github.com/matthaywardwebdesign/NodeJS-P2P"
+}

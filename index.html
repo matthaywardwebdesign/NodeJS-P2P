@@ -1,0 +1,53 @@
+<script src="http://localhost:8123/socket.io/socket.io.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+  var socket = io('http://localhost:8123');
+    var lastMessage = "";
+  var username = "";
+  function connect(){
+    socket.emit('connecttopeer', {"host":document.getElementById("host").value,"port":document.getElementById("port").value});   
+  }
+    
+    function setusername(){
+      username = document.getElementById("username").value;
+      //Start the check timer
+      setInterval(function(){
+          console.log("Checking for messages");
+          socket.emit("getmessages",{"username":username});
+      }, 1000);
+    }
+    
+    function sendmessage(){
+        socket.emit("sendmessage",{"user":document.getElementById("user").value,"message":username + ":" + document.getElementById("message").value});
+        $("#mymessages").append("<strong>Me to " + document.getElementById("user").value + ":</strong>" + document.getElementById("message").value + "<br>"); 
+    }
+    
+    socket.on('message', function (data){
+        if (lastMessage != data.value && data.key == username){
+        $("#mymessages").append("<strong>" + data.value.split(":")[0] + ":</strong>" + data.value.split(":")[1] + "<br>"); 
+            lastMessage = data.value;
+        }
+    });
+</script>
+<style>
+    body {
+        font-family: 'Arial';   
+    }
+</style>
+<h1>P2P Messaging in Node JS - Demo</h1>
+<br>
+Firstly connect to a open peer here (one that accepts incoming connections)
+<br><br>
+<input type='text' id='host' placeholder='Host' /><input type='text' id='port' placeholder='Port' /><a href='#' onclick='connect()'>Connect</a>
+<br><br>
+Set your username
+<br><br>
+<input type='text' id='username' placeholder='Username' /><a href='#' onclick='setusername()'>Set</a>
+<br><br>
+Send a message to another user on the P2P network
+<br><br>
+<input type='text' id='user' placeholder='A friends username' /><input type='text' id='message' placeholder='Message'/><a href='#' onclick='sendmessage()'>Send</a>
+<br><br>
+<h2>Your messages will appear here</h2>
+<br><br>
+<div id='mymessages'></div>
